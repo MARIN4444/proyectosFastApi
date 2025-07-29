@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="static/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="title">To-Do List</h1>
+            <p class="subtitle">Gestiona tus tareas de manera eficiente</p>
+        </header>
+
+        <!-- Error Message -->
+        <div id="error-message" class="error-message hidden">
+            <span id="error-text"></span>
+            <button id="close-error" class="close-btn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <!-- Create Task Form -->
+        <section class="create-section">
+            <h2 class="section-title">Crear Nueva Tarea</h2>
+            <form id="create-form" class="create-form">
+                <input 
+                    type="text" 
+                    id="task-title" 
+                    placeholder="Título de la tarea" 
+                    required
+                    class="input-field"
+                >
+                <textarea 
+                    id="task-description" 
+                    placeholder="Descripción (opcional)" 
+                    rows="3"
+                    class="input-field textarea"
+                ></textarea>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-plus"></i>
+                    Crear Tarea
+                </button>
+            </form>
+        </section>
+
+        <!-- Tasks List -->
+        <section class="tasks-section">
+            <h2 class="section-title">
+                Tareas (<span id="task-count">0</span>)
+            </h2>
+            
+            <!-- Loading -->
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>Cargando tareas...</p>
+            </div>
+
+            <!-- Empty State -->
+            <div id="empty-state" class="empty-state hidden">
+                <i class="fas fa-clipboard-list"></i>
+                <p class="empty-title">No hay tareas creadas</p>
+                <p class="empty-subtitle">Crea tu primera tarea arriba</p>
+            </div>
+
+            <!-- Tasks Container -->
+            <div id="tasks-container" class="tasks-container"></div>
+        </section>
+    </div>
+
+    <!-- Task Template -->
+    <template id="task-template">
+        <div class="task-card" data-task-id="">
+            <!-- Display Mode -->
+            <div class="task-display">
+                <div class="task-content">
+                    <h3 class="task-title"></h3>
+                    <p class="task-description"></p>
+                    <div class="task-meta">
+                        <span class="task-id">ID: </span>
+                    </div>
+                </div>
+                <div class="task-actions">
+                    <button class="btn btn-edit" onclick="editTask(this)">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-delete" onclick="deleteTask(this)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Edit Mode -->
+            <div class="task-edit hidden">
+                <input type="text" class="input-field edit-title" placeholder="Título">
+                <textarea class="input-field textarea edit-description" rows="3" placeholder="Descripción"></textarea>
+                <div class="edit-actions">
+                    <button class="btn btn-save" onclick="saveTask(this)">
+                        <i class="fas fa-save"></i>
+                        Guardar
+                    </button>
+                    <button class="btn btn-cancel" onclick="cancelEdit(this)">
+                        <i class="fas fa-times"></i>
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
